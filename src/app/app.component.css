@@ -1,0 +1,17 @@
+.memberImg{
+    border-radius:50%;
+    height:25px;
+    width:25px;
+    border:1px solid black;
+}
+.memberAbbr{
+    border : 1px solid black;
+    display: inline-block;
+    text-align: center;
+    font-weight:bold;
+    background-color:#ccc;
+    line-height:22px;
+}
+.nameSpan{
+    line-height:22px;
+}

@@ -1,0 +1,105 @@
+<ng-template #defaultProjectTemplate let-project="project">
+  <div>
+    <span>
+      {{project.projectName}}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #defaultMemberTemplate let-member="member">
+  <div>
+    <span>
+      {{member.memberName}}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #projectSelectionCapsule let-item="item">
+  <div class="project-capsule">
+    <div *ngIf="options.showImg">
+      <img [src]="item.thumbUrl" *ngIf="item.thumbUrl;else elsePart" />
+    </div>
+    <span>{{item.displayName}}</span>
+    <span>X</span>
+  </div>
+</ng-template>
+  
+<ng-template #customMemberTemplate let-member="member">
+     <div>
+         <img class="memberImg" *ngIf="member.displayThumb;else elsePart" [src]="member.displayThumb" />
+         <template #elsePart [ngTemplateOutlet]="projectSelectionCapsule" [ngTemplateOutletContext]="{member : member}">
+          <span class="memberImg memberAbbr nameSpan">{{4+4}}</span>
+        </template>
+         <span class="nameSpan">
+            {{member.displayName}}
+         </span>
+	 </div>
+</ng-template>
+
+<div id="projectSelectorContainer" class="form-group">
+    <label for="projectSelector">Projects:</label>
+  <div class="project-text-box">
+      <ul class="multi-select-list-textbox">
+        <li *ngFor="let item of collection">
+          <template [ngTemplateOutlet]="projectSelectionCapsule" [ngTemplateOutletContext]="{item : item}">
+          </template>
+        </li>
+      </ul>
+      <input type="text" name="projectSelector" id="projectSelector" [(ngModel)]="projectSearchTextBoxValue" (keyup)="getsearchedProjectList()">
+  </div>
+<ul class="selector-list-box">
+  <li *ngFor="let project of projectCollection" (click)="setSelectedProject(project)" class="multi-select-list-item">
+    <template [ngTemplateOutlet]="customProjectListTemplate || defaultProjectTemplate" 
+              [ngTemplateOutletContext]="{project: project}">
+    </template>
+  </li>
+</ul>
+</div>
+
+<div id="projectSelectorContainer" class="form-group">
+    <label for="projectSelector">Administrator:</label>
+  <!--<input type="text" name="projectSelector" id="projectSelector" class="form-control" [value]="selectedProject">-->
+  <div class="project-text-box">
+      <ul class="multi-select-list-textbox">
+        <li *ngIf="selectedProject">
+          <div class="project-capsule">
+            <span>{{selectedProject}}</span>
+            <!--<span><i class="fa fa-close"></i></span>-->
+            <span (click)="removeSelection()">X</span>
+				  </div>
+        </li>
+      </ul>
+      <input type="text" name="projectSelector" id="projectSelector" [(ngModel)]="projectSearchTextBoxValue" (keyup)="getsearchedProjectList()">
+  </div>
+<ul class="selector-list-box">
+  <li *ngFor="let member of administratorCollection" (click)="setSelectedProject(administrator.name)" class="multi-select-list-item"  >
+     <template [ngTemplateOutlet]="customMemberTemplate || defaultMemberTemplate" 
+              [ngTemplateOutletContext]="{member: member}">
+    </template>
+  </li>
+</ul>
+</div>
+
+<div id="projectSelectorContainer" class="form-group">
+    <label for="projectSelector">projectMembersCollection:</label>
+  <!--<input type="text" name="<projectSel></projectSel>ector" id="projectSelector" class="form-control" [value]="selectedProject">-->
+  <div class="project-text-box">
+      <ul class="multi-select-list-textbox">
+        <li *ngIf="selectedProject">
+          <div class="project-capsule">
+            <span>{{selectedProject}}</span>
+            <!--<span><i class="fa fa-close"></i></span>-->
+            <span (click)="removeSelection()">X</span>
+				  </div>
+        </li>
+      </ul>
+      <input type="text" name="projectSelector" id="projectSelector" [(ngModel)]="projectSearchTextBoxValue" (keyup)="getsearchedProjectList()">
+  </div>
+<ul class="selector-list-box">
+  <li *ngFor="let member of projectMembersCollection" class="multi-select-list-item" (click)="setSelectedProject(member.name)">
+     <template [ngTemplateOutlet]="customMemberTemplate || defaultMemberTemplate" 
+              [ngTemplateOutletContext]="{member: member}">
+    </template>
+  </li>
+</ul>
+</div>

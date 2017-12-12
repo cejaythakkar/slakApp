@@ -1,0 +1,29 @@
+<ng-template #customProjectListTemplate let-project="project">
+     <div>
+         <span class="nameSpan">
+            {{project.displayName}}
+         </span>
+	 </div>
+</ng-template>
+
+<ng-template #customMemberTemplate let-member="member">
+     <div>
+         <img class="memberImg" *ngIf="member.thumbUrl !== ''" [src]="member.thumbUrl" />
+         <span *ngIf="member.thumbUrl === ''" class="memberImg memberAbbr nameSpan">{{member.memberAbbriviation}}</span>
+         <span class="nameSpan">
+            {{member.displayName}}
+         </span>
+	 </div>
+</ng-template>
+
+<app-multiple-select-list-box 
+            allowMultiple="false"
+            selectBoxLabel="Projects"
+            [projectCollection]="projectCollection"
+            [administratorCollection]="administrationCollection"
+            [projectMembersCollection]="projectMembersCollection"
+            [customProjectListTemplate]="customProjectListTemplate"
+            [customMemberTemplate]="customMemberTemplate"
+            [options] = "projectOptions"
+            >
+</app-multiple-select-list-box>
